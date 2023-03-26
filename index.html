@@ -144,7 +144,7 @@ searchForm.addEventListener('submit', function(event) {
     url = 'https://' + query;
   } else {
     // Otherwise, construct a search query URL
-    url = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+    url = 'https://duckduckgo.com/?va=u&t=ha&q=' + encodeURIComponent(query) + '&ia=web';
   }
 
   // Redirect the user to the search results page or direct link URL
