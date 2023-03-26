@@ -90,8 +90,6 @@
                 display: none;
             }
 
-            .clear-search,
-
             .show-history {
                 display: block;
             }
@@ -99,17 +97,16 @@
             .search-history {
                 display: none;
                 position: absolute;
-                top: 0;
+                top: 10vh;
                 left: 0;
                 bottom: 0;
-                width: 15%;
+                width: 30vh;
                 max-height: 100%;
                 overflow-y: auto;
-                margin: 0;
-                padding: 5px 0;
-                background-color: rgb(0, 0, 0);
-                border: 1px solid #ccc;
-                border-radius: 5px;
+                margin: 5px;
+                padding: 15px 5px;
+                background-color: rgb(22, 22, 22);
+                border-radius: 30px;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
                 z-index: 1;
             }
@@ -126,7 +123,7 @@
 
         }
 
-        @media (max-width:500px) {
+        @media (max-width:700px) {
             .search-engine {
                 width: 90%;
             }
@@ -137,7 +134,7 @@
                 top: 70%;
                 left: 0;
                 bottom: 0;
-                width: 99%;
+                width: 97%;
             }
         }
     </style>
