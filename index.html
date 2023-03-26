@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>WebD Browser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        @media screen{
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.2rem;
+            background-color: #1d1d1d;
+            color: #a7a7a7;
+        }
+
+        header a {
+            text-decoration: none;
+            position: fixed;
+            top: 5px;
+            right: 15px;
+        }
+
+        form {
+            width: 100%;
+            height: 30vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-engine {
+            width: 40%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #7c7c7c;
+            border-radius: 50px;
+            padding: 10px;
+        }
+
+        .search-engine:hover {
+            border: 1px solid #3b3b3b;
+            background-color: #3b3b3b;
+        }
+
+        .search-engine.clicked {
+            border: 1px solid #3b3b3b;
+            background-color: #3b3b3b;
+        }
+
+
+        .search-engine input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            background-color: #ffffff00;
+            color: white;
+        }
+
+        .search-engine button {
+            background-color: #ffffff00;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .search-engine button i {
+            font-size: 1rem;
+            font-weight: 10p;
+            color: #a7a7a7;
+        }
+
+        .search-engine a {
+            text-decoration: none;
+            font-size: 1rem;
+            color: #ffffff;
+            margin: -5px;
+            padding: 5px 10px;
+            border-radius: 50px;
+        }
+
+        .search-engine a:hover {
+            color: #ffffff;
+            background-color: #424242;
+            border-radius: 50px;
+        }
+    }
+    @media (max-width:500px){
+        .search-engine{
+            width: 80%;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <form id="search-form">
+        <div class="search-engine">
+            <button type="submit"><i class="fa fa-search"></i></button>
+            <input type="text" name="query" placeholder="Search...">
+            <a href="https://mail.google.com">Gmail</a>
+        </div>
+    </form>
+    
+    <script>
+        // Get the search engine element
+        var searchEngine = document.querySelector('.search-engine');
+
+        // Add a click event listener to the search engine
+        searchEngine.addEventListener('click', function (event) {
+            // Toggle the "clicked" class on the search engine
+            searchEngine.classList.toggle('clicked');
+        });
+
+        // Add a click event listener to the document
+        document.addEventListener('click', function (event) {
+            // Remove the "clicked" class from the search engine if the click event target is not the search engine or one of its child elements
+            if (!searchEngine.contains(event.target)) {
+                searchEngine.classList.remove('clicked');
+            }
+        });
+
+        // Get the search form and input field
+var searchForm = document.getElementById('search-form');
+var searchInput = searchForm.querySelector('input[name="query"]');
+
+// Add a submit event listener to the search form
+searchForm.addEventListener('submit', function(event) {
+  // Prevent the default form submission behavior
+  event.preventDefault();
+
+  // Get the input value and construct the search query URL or direct link URL
+  var query = searchInput.value.trim();
+  var url = '';
+
+  if (query.startsWith('https://')) {
+    // If the query starts with "https://", use it directly
+    url = query;
+  } else if (/\b\w+\.(com|org|net|edu|gov)(\/|$)/i.test(query)) {
+    // If the query ends with ".com", ".org", ".net", ".edu", or ".gov", construct a direct link URL
+    url = 'https://' + query;
+  } else {
+    // Otherwise, construct a search query URL
+    url = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+  }
+
+  // Redirect the user to the search results page or direct link URL
+  window.location.href = url;
+});
+    </script>
+</body>
+
+</html>
