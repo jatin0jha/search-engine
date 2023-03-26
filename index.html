@@ -18,13 +18,13 @@
         header a {
             text-decoration: none;
             position: fixed;
-            top: 5px;
+            top: 7px;
             right: 15px;
         }
 
         form {
             width: 100%;
-            height: 30vh;
+            height: 50vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -73,7 +73,7 @@
             color: #a7a7a7;
         }
 
-        .search-engine a {
+        header a {
             text-decoration: none;
             font-size: 1rem;
             color: #ffffff;
@@ -82,10 +82,8 @@
             border-radius: 50px;
         }
 
-        .search-engine a:hover {
-            color: #ffffff;
-            background-color: #424242;
-            border-radius: 50px;
+        header a:hover {
+            color: #ffffffbe;
         }
     }
     @media (max-width:500px){
@@ -97,11 +95,13 @@
 </head>
 
 <body>
+    <header>
+        <a href="https://mail.google.com">Gmail</a>
+    </header>
     <form id="search-form">
         <div class="search-engine">
-            <button type="submit"><i class="fa fa-search"></i></button>
             <input type="text" name="query" placeholder="Search...">
-            <a href="https://mail.google.com">Gmail</a>
+            <button type="submit"><i class="fa fa-search"></i></button>
         </div>
     </form>
     
