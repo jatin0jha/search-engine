@@ -7,90 +7,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        @media screen{
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 1.2rem;
-            background-color: #1d1d1d;
-            color: #a7a7a7;
+        @media screen {
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 1.2rem;
+                background-color: #1d1d1d;
+                color: #a7a7a7;
+            }
+
+            header a {
+                text-decoration: none;
+                position: fixed;
+                top: 7px;
+                right: 15px;
+            }
+
+            form {
+                width: 100%;
+                height: 50vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .search-engine {
+                width: 40%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: 1px solid #7c7c7c;
+                border-radius: 50px;
+                padding: 10px;
+            }
+
+            .search-engine:hover {
+                border: 1px solid #3b3b3b;
+                background-color: #3b3b3b;
+            }
+
+            .search-engine.clicked {
+                border: 1px solid #3b3b3b;
+                background-color: #3b3b3b;
+            }
+
+
+            .search-engine input {
+                width: 100%;
+                border: none;
+                outline: none;
+                font-size: 1rem;
+                background-color: #ffffff00;
+                color: white;
+            }
+
+            .search-engine button {
+                background-color: #ffffff00;
+                border: none;
+                outline: none;
+                cursor: pointer;
+            }
+
+            .search-engine button i {
+                font-size: 1rem;
+                font-weight: 10p;
+                color: #a7a7a7;
+            }
+
+            header a {
+                text-decoration: none;
+                font-size: 1rem;
+                color: #ffffff;
+                margin: -5px;
+                padding: 5px 10px;
+                border-radius: 50px;
+            }
+
+            header a:hover {
+                color: #ffffffbe;
+            }
+
+            .clear-search {
+                display: none;
+            }
+
+            .clear-search,
+
+            .show-history {
+                display: block;
+            }
+
+            .search-history {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 15%;
+                max-height: 100%;
+                overflow-y: auto;
+                margin: 0;
+                padding: 5px 0;
+                background-color: rgb(0, 0, 0);
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                z-index: 1;
+            }
+
+            .search-history li {
+                list-style: none;
+                padding: 5px;
+                cursor: pointer;
+            }
+
+            .search-history li:hover {
+                background-color: #eee;
+            }
+
         }
 
-        header a {
-            text-decoration: none;
-            position: fixed;
-            top: 7px;
-            right: 15px;
-        }
+        @media (max-width:500px) {
+            .search-engine {
+                width: 90%;
+            }
 
-        form {
-            width: 100%;
-            height: 50vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            .search-history {
+                display: none;
+                position: absolute;
+                top: 70%;
+                left: 0;
+                bottom: 0;
+                width: 99%;
+            }
         }
-
-        .search-engine {
-            width: 40%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #7c7c7c;
-            border-radius: 50px;
-            padding: 10px;
-        }
-
-        .search-engine:hover {
-            border: 1px solid #3b3b3b;
-            background-color: #3b3b3b;
-        }
-
-        .search-engine.clicked {
-            border: 1px solid #3b3b3b;
-            background-color: #3b3b3b;
-        }
-
-
-        .search-engine input {
-            width: 100%;
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            background-color: #ffffff00;
-            color: white;
-        }
-
-        .search-engine button {
-            background-color: #ffffff00;
-            border: none;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .search-engine button i {
-            font-size: 1rem;
-            font-weight: 10p;
-            color: #a7a7a7;
-        }
-
-        header a {
-            text-decoration: none;
-            font-size: 1rem;
-            color: #ffffff;
-            margin: -5px;
-            padding: 5px 10px;
-            border-radius: 50px;
-        }
-
-        header a:hover {
-            color: #ffffffbe;
-        }
-    }
-    @media (max-width:500px){
-        .search-engine{
-            width: 90%;
-        }
-    }
     </style>
 </head>
 
@@ -100,56 +149,105 @@
     </header>
     <form id="search-form">
         <div class="search-engine">
-            <input type="text" name="query" placeholder="Search...">
             <button type="submit"><i class="fa fa-search"></i></button>
+            <input type="text" name="query" placeholder="Search...">
+            <button type="button" class="clear-search"><i class="fa fa-times"></i></button>
+            <button type="button" class="show-history"><i class="fa fa-caret-down"></i></button>
+            <ul class="search-history"></ul>
         </div>
     </form>
-    
+
+
     <script>
-        // Get the search engine element
-        var searchEngine = document.querySelector('.search-engine');
+        var searchForm = document.getElementById('search-form');
+        var searchInput = searchForm.querySelector('input[name="query"]');
+        var clearSearchButton = searchForm.querySelector('.clear-search');
+        var showHistoryButton = searchForm.querySelector('.show-history');
+        var searchHistoryList = searchForm.querySelector('.search-history');
 
-        // Add a click event listener to the search engine
-        searchEngine.addEventListener('click', function (event) {
-            // Toggle the "clicked" class on the search engine
-            searchEngine.classList.toggle('clicked');
-        });
-
-        // Add a click event listener to the document
-        document.addEventListener('click', function (event) {
-            // Remove the "clicked" class from the search engine if the click event target is not the search engine or one of its child elements
-            if (!searchEngine.contains(event.target)) {
-                searchEngine.classList.remove('clicked');
+        searchInput.addEventListener('input', function () {
+            if (searchInput.value.trim()) {
+                clearSearchButton.style.display = 'block';
+            } else {
+                clearSearchButton.style.display = 'none';
             }
         });
 
-        // Get the search form and input field
-var searchForm = document.getElementById('search-form');
-var searchInput = searchForm.querySelector('input[name="query"]');
+        clearSearchButton.addEventListener('click', function () {
+            searchInput.value = '';
+            searchInput.focus();
+            clearSearchButton.style.display = 'none';
+        });
 
-// Add a submit event listener to the search form
-searchForm.addEventListener('submit', function(event) {
-  // Prevent the default form submission behavior
-  event.preventDefault();
+        showHistoryButton.addEventListener('click', function () {
+            if (searchHistoryList.style.display === 'block') {
+                searchHistoryList.style.display = 'none';
+            } else {
+                searchHistoryList.style.display = 'block';
+            }
+        });
 
-  // Get the input value and construct the search query URL or direct link URL
-  var query = searchInput.value.trim();
-  var url = '';
+        document.addEventListener('click', function (event) {
+            if (!searchForm.contains(event.target)) {
+                searchHistoryList.style.display = 'none';
+            }
+        });
 
-  if (query.startsWith('https://')) {
-    // If the query starts with "https://", use it directly
-    url = query;
-  } else if (/\b\w+\.(com|org|net|edu|gov)(\/|$)/i.test(query)) {
-    // If the query ends with ".com", ".org", ".net", ".edu", or ".gov", construct a direct link URL
-    url = 'https://' + query;
-  } else {
-    // Otherwise, construct a search query URL
-    url = 'https://duckduckgo.com/?va=u&t=ha&q=' + encodeURIComponent(query) + '&ia=web';
-  }
+        searchForm.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-  // Redirect the user to the search results page or direct link URL
-  window.location.href = url;
-});
+            var query = searchInput.value.trim();
+            var url = '';
+
+            if (query.startsWith('https://')) {
+                url = query;
+            } else if (/\b\w+\.(com|org|net|edu|gov)(\/|$)/i.test(query)) {
+                url = 'https://' + query;
+            } else {
+                url = 'https://duckduckgo.com/?va=u&t=ha&q=' + encodeURIComponent(query) + '&ia=web';
+            }
+
+            // Add the search query to the history list
+            addToSearchHistory(query);
+
+            window.location.href = url;
+        });
+
+        function addToSearchHistory(query) {
+            // Get the existing search history from localStorage or initialize it to an empty array
+            var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+            // Add the new query to the beginning of the history array
+            searchHistory.unshift(query);
+
+            // Remove duplicates from the history array
+            searchHistory = [...new Set(searchHistory)];
+
+            // Limit the history array to 10 items
+            searchHistory = searchHistory.slice(0, 10);
+
+            // Update the search history in localStorage
+            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+
+            // Update the search history list in the UI
+            updateSearchHistoryList(searchHistory);
+        }
+
+        function updateSearchHistoryList(searchHistory) {
+            // Clear the existing search history list
+            searchHistoryList.innerHTML = '';
+
+            // Add each query in the search history to the list as a list item
+            for (var i = 0; i < searchHistory.length; i++) {
+                var listItem = document.createElement('li');
+                listItem.textContent = searchHistory[i];
+                searchHistoryList.appendChild(listItem);
+            }
+        }
+
+        // Load the search history from localStorage when the page loads
+        var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        updateSearchHistoryList(searchHistory);
     </script>
 </body>
 
